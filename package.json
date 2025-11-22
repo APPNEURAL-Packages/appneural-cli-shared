@@ -4,6 +4,9 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "peerDependencies": {},
   "dependencies": {
     "@types/inquirer": "^9.0.7",
@@ -14,6 +17,7 @@
     "ora": "^8.1.0"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build"
   }
 }
