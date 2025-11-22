@@ -27,8 +27,26 @@ type InputOptions = { initial?: string; validate?: (value: string) => true | str
 export async function input(message: string, options?: InputOptions): Promise<string> {
   const normalized =
     typeof options === "string" ? { initial: options } : options ?? {};
+
+  const question: {
+    type: "input";
+    name: "value";
+    message: string;
+    default?: string;
+    validate?: (value: string) => true | string;
+  } = {
+    type: "input",
+    name: "value",
+    message,
+    default: normalized.initial
+  };
+
+  if (normalized.validate) {
+    question.validate = normalized.validate;
+  }
+
   const response = await inquirer.prompt<{ value: string }>([
-    { type: "input", name: "value", message, default: normalized.initial, validate: normalized.validate }
+    question
   ]);
   return response.value;
 }
